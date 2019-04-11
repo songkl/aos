@@ -22,6 +22,7 @@ import elements from './helpers/elements';
  */
 let $aosElements = [];
 let initialized = false;
+let rootEl;
 
 /**
  * Default options
@@ -52,15 +53,16 @@ const initializeScroll = function initializeScroll() {
   // Extend elements objects in $aosElements with their positions
   $aosElements = prepare($aosElements, options);
   // Perform scroll event, to refresh view and show/hide elements
-  handleScroll($aosElements);
-
+  let _rootEl = rootEl || window;
+  console.log('init...', rootEl)
+  handleScroll($aosElements, rootEl);
   /**
    * Handle scroll event to animate elements on scroll
    */
-  window.addEventListener(
+  _rootEl.addEventListener(
     'scroll',
     throttle(() => {
-      handleScroll($aosElements, options.once);
+      handleScroll($aosElements, options.once, rootEl);
     }, options.throttleDelay)
   );
 
@@ -220,6 +222,11 @@ const init = function init(settings) {
   return $aosElements;
 };
 
+const setRoot = function (el) {
+  rootEl = el;
+  initializeScroll();
+}
+
 /**
  * Export Public API
  */
@@ -227,5 +234,6 @@ const init = function init(settings) {
 export default {
   init,
   refresh,
-  refreshHard
+  refreshHard,
+  setRoot,
 };
