@@ -54,7 +54,6 @@ const initializeScroll = function initializeScroll() {
   $aosElements = prepare($aosElements, options);
   // Perform scroll event, to refresh view and show/hide elements
   let _rootEl = rootEl || window;
-  console.log('init...', rootEl)
   handleScroll($aosElements, rootEl);
   /**
    * Handle scroll event to animate elements on scroll
